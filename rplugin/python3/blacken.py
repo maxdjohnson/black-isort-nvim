@@ -4,6 +4,7 @@
 import time
 import sys
 from typing import List, Dict, Union
+import traceback
 
 import pynvim
 
@@ -56,11 +57,12 @@ class Main:
             )
         except black.NothingChanged:
             self.n.out_write("Already well formatted, good job.\n")
-        except black.InvalidInput:
-            self.n.err_write(
-                "Black could not parse the input. "
-                "Make sure your code is syntactically correct before running.\n"
-            )
+        except black.InvalidInput as e:
+            self.n.err_write(traceback.format_exc(limit=1))
+            # self.n.err_write(
+            #    "Black could not parse the input. "
+            #    "Make sure your code is syntactically correct before running.\n"
+            # )
         else:
             # update buffer, remembering the location of the cursor
             cursor = self.n.current.window.cursor
