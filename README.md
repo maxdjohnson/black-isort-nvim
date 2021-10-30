@@ -1,3 +1,6 @@
+# NOTE:
+- This is a quick fork of this repo which gives much more useful information re. formatting errors in nvim itself
+
 # black-nvim
 
 A port of the [official black plugin] to Neovim's remote Python plugin interface.
