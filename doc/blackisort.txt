@@ -1,0 +1,45 @@
+*black.txt*                                           Format your code using Black
+
+--------------------------------------------------------------------------------
+INTRODUCTION                                            *black-isort-introduction*
+
+black-isort-nvim formats your Python buffer asynchronously using Black
+(https://github.com/psf/black) and isort (https://github.com/psf/isort). Its
+interface is simple: it defines a function, |BlackIsort()|, that formats the
+entire buffer.
+
+--------------------------------------------------------------------------------
+USAGE                                                          *black-isort-usage*
+
+You can set *BlackIsort()* to a command, key mapping, or just call it directly.
+For example, you can put the following commands in after/ftplugin/python.vim to
+make CTRL-Q format the buffer:
+>
+    nnoremap <buffer><silent> <c-q> <cmd>call BlackIsort()<cr>
+    inoremap <buffer><silent> <c-q> <cmd>call BlackIsort()<cr>
+<
+--------------------------------------------------------------------------------
+CONFIGURATION                                          *black-isort-configuration*
+
+Use *g:black#settings*
+For example:
+>
+    let g:black#settings = {
+        \ 'fast': 1,
+        \ 'line_length': 100
+    \}
+<
+* `fast` (default: 0)
+  Set to a non-zero number to skip the AST check. This makes formatting a lot
+  faster.
+* `line_length` (default: 88)
+  Set to an integer to tell Black where to wrap lines.
+
+Use *g:isort#settings*
+For example:
+>
+    let g:isort#settings = {
+        \ 'profile': 'black
+    \}
+
+vim:ft=help:tw=80:ts=4:et:

@@ -1,11 +1,8 @@
-# NOTE:
-- This is a quick fork of this repo which gives much more useful information re. formatting errors in nvim itself
+# black-isort-nvim
 
-# black-nvim
+Based on [averms/black-nvim] but also runs isort
 
-A port of the [official black plugin] to Neovim's remote Python plugin interface.
-
-Differences:
+Features:
 
 - It runs asynchronously, so it won't block scrolling while formatting the buffer.
 - Checks if filetype is "python" before formatting.
@@ -14,7 +11,11 @@ Differences:
 - Don't have to clone the entire source repo just to get the plugin.
 - Zero lines of Vimscript.
 
-[official black plugin]: https://github.com/ambv/black/tree/master/plugin/black.vim
+Todo:
+- Find pyproject.toml and apply its configuration along with the Nvim configuration. 
+- Add option to disable string normalization.
+
+[averms/black-nvim]: https://github.com/averms/black-nvim
 
 ## Installation
 
@@ -23,9 +24,9 @@ I wouldn't recommend using it.
 
 | Plugin manager | How to install                                             |
 |----------------|------------------------------------------------------------|
-| minpac         | `call minpac#add('averms/black-nvim')`                     |
-| dein.vim       | `call dein#add('averms/black-nvim')`                       |
-| vim-plug       | `Plug 'averms/black-nvim', {'do': ':UpdateRemotePlugins'}` |
+| minpac         | `call minpac#add('maxdjohnson/black-isort-nvim')`                     |
+| dein.vim       | `call dein#add('maxdjohnson/black-isort-nvim')`                       |
+| vim-plug       | `Plug 'maxdjohnson/black-isort-nvim', {'do': ':UpdateRemotePlugins'}` |
 
 If you don't already have a system for managing python environments on your computer
 I would recommend the following:
@@ -37,7 +38,7 @@ I would recommend the following:
   python3 -m venv nvim
   cd nvim
   . ./bin/activate
-  pip install pynvim black
+  pip install pynvim black isort
   ```
 - Tell neovim about that environment like so:
   ```vim
@@ -47,9 +48,9 @@ I would recommend the following:
 
 ## Documentation
 
-See [black.md](doc/black.md) or type `:h black.txt`.
+See [blackisort.md](doc/blackisort.md) or type `:h blackisort.txt`.
 
 ## License
 
-black-nvim is distributed under the MIT/Expat license.
+black-isort-nvim is distributed under the MIT/Expat license.
 See LICENSE file for details.
