@@ -59,15 +59,21 @@ class BlackIsorter:
         user_options = self.n.vars.get("black#settings")
         if user_options is not None:
             options.update(user_options)
+        tw: int = self.n.current.buffer.options.get("textwidth")
+        if tw > 0:
+            options["line_length"] = tw
         return options
 
-    def get_isort_opts(self) -> Dict[str, Union[int, bool]]:
-        options = {
+    def get_isort_opts(self) -> Dict[str, Union[int, str]]:
+        options: Dict[str, Union[int, str]] = {
             "profile": "black",
         }
         user_options = self.n.vars.get("isort#settings")
         if user_options is not None:
             options.update(user_options)
+        tw: int = self.n.current.buffer.options.get("textwidth")
+        if tw > 0:
+            options["line_length"] = tw
         return options
 
     def format_buff(
@@ -91,7 +97,9 @@ class BlackIsorter:
         except black.InvalidInput:
             self.n.err_write(traceback.format_exc(limit=1))
         if to_format == new_buffer:
-            self.n.out_write(f"Nothing changed ({time.perf_counter() - start:.3f}s).\n")
+            self.n.out_write(
+                f"BlackIsort: Unchanged in {round(1000 * (time.perf_counter() - start))}ms.\n"
+            )
         else:
             # update buffer, remembering the location of the cursor
             cursor = self.n.current.window.cursor
@@ -103,13 +111,15 @@ class BlackIsorter:
                 # if cursor is outside buffer, set it to last line.
                 self.n.current.window.cursor = (len(self.n.current.buffer), 0)
 
-            self.n.out_write(f"Reformatted ({time.perf_counter() - start:.3f}s).\n")
+            self.n.out_write(
+                f"BlackIsort: Formatted in {round(1000 * (time.perf_counter() - start))}ms.\n"
+            )
 
     def get_file_path(self) -> Optional[Path]:
         bufname = self.n.current.buffer.name
         if bufname is None:
             return None
         file_path = Path(bufname)
-        if file_path.is_absolute():
+        if file_path.is_absolute() and file_path.exists():
             return file_path
         return None
